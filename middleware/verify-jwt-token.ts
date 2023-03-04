@@ -14,7 +14,7 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
   jwt.verify(token as string, authConfig.secret || '', (err) => {
     if (err) {
       return res.status(401).send({
-        message: `Sorry, we weren't able to verify you. Please try log in again or try again later`,
+        message: `Sorry, we weren't able to verify you. Please try log in again or try again later.`,
       });
     }
     next();

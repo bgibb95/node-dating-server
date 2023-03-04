@@ -9,5 +9,5 @@ export const authRoutes = (app: Express) => {
   });
 
   app.post('/api/1/signup', [checkDuplicateUsernameOrEmail], signUp);
-  app.post('/api/1/signin', login);
+  app.post('/api/1/login', login);
 };

@@ -10,9 +10,8 @@ export const signUp = (req: Request, res: Response) => {
   if (!req.body.username) {
     return res.status(400).send({ message: 'Missing username.' });
   }
-
   if (!req.body.password) {
-    return res.status(400).send({ message: 'Password required.' });
+    return res.status(400).send({ message: 'Password is required.' });
   }
 
   User.create({
