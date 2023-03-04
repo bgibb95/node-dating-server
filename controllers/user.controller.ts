@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import db from '../models';
 const User = db.user;
 
-export const allAccess = (req: Request, res: Response) => {
+export const allUsers = (req: Request, res: Response) => {
   User.findAll()
     .then((users) => {
       const cleanedUsers = users?.map((user) => {
@@ -13,8 +13,12 @@ export const allAccess = (req: Request, res: Response) => {
 
       res.status(200).send({ users: cleanedUsers });
     })
-    .catch((err) => {
-      res.status(500).send({ message: err.message });
+    .catch((error) => {
+      console.log('Error fetching all users: ', error.message);
+      res.status(500).send({
+        message:
+          'Sorry, something went wrong while fetching all the people looking for love. Please try again later.',
+      });
     });
 };
 
@@ -42,7 +46,11 @@ export const userProfile = (req: Request, res: Response) => {
 
       res.status(200).send({ user: cleanedUser });
     })
-    .catch((err) => {
-      res.status(500).send({ message: err.message });
+    .catch((error) => {
+      console.log('Error fetching user profile: ', error.message);
+      res.status(500).send({
+        message:
+          'Sorry, something went wrong while fetching the dating profile. Please try again later.',
+      });
     });
 };

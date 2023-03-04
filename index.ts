@@ -26,14 +26,10 @@ app.use(express.urlencoded({ extended: true }));
 //   console.log('Drops and Resync Database with { force: true }');
 // });
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Express + TypeScript Server');
-});
+app.get('/', (req: Request, res: Response) => res.send('Express + TypeScript Server'));
 
 // Routes
 authRoutes(app);
 userRoutes(app);
 
-app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
-});
+app.listen(port, () => console.log(`⚡️[server]: Server is running at http://localhost:${port}`));

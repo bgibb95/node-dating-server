@@ -1,10 +1,10 @@
+import bcrypt from 'bcryptjs';
 import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 import { authConfig } from '../config/auth.config';
 import db from '../models';
-const User = db.user;
 
-var jwt = require('jsonwebtoken');
-var bcrypt = require('bcryptjs');
+const User = db.user;
 
 export const signUp = (req: Request, res: Response) => {
   if (!req.body.username) {
@@ -26,11 +26,11 @@ export const signUp = (req: Request, res: Response) => {
     occupation: req.body.occupation,
   })
     .then((user) => {
-      var token = jwt.sign({ id: user.id }, authConfig.secret, {
+      var token = jwt.sign({ id: user.id }, authConfig.secret || '', {
         expiresIn: 86400, // 24 hours
       });
 
-      res.status(200).send({
+      return res.status(200).send({
         id: user.id,
         username: user.username,
         email: user.email,
@@ -43,8 +43,11 @@ export const signUp = (req: Request, res: Response) => {
         createdAt: user.createdAt,
       });
     })
-    .catch((err) => {
-      res.status(500).send({ message: err.message });
+    .catch((error) => {
+      console.log('Error during sign up: ', error.message);
+      return res.status(500).send({
+        message: 'Sorry, something went wrong while trying to sign up. Please try again later.',
+      });
     });
 };
 
@@ -75,11 +78,11 @@ export const login = (req: Request, res: Response) => {
         });
       }
 
-      var token = jwt.sign({ id: user.id }, authConfig.secret, {
+      var token = jwt.sign({ id: user.id }, authConfig.secret || '', {
         expiresIn: 86400, // 24 hours
       });
 
-      res.status(200).send({
+      return res.status(200).send({
         id: user.id,
         username: user.username,
         email: user.email,
@@ -94,6 +97,8 @@ export const login = (req: Request, res: Response) => {
     })
     .catch((err) => {
       console.log('Error during login: ', err);
-      res.status(500).send({ message: err.message });
+      return res.status(500).send({
+        message: 'Sorry, something went wrong while trying to log in. Please try again later.',
+      });
     });
 };

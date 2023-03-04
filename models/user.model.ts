@@ -7,7 +7,7 @@ import {
   Sequelize,
 } from 'sequelize';
 
-// order of InferAttributes & InferCreationAttributes is important.
+// Order of InferAttributes & InferCreationAttributes is important.
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   // 'CreationOptional' is a special type that marks the field as optional
   // when creating an instance of the model (such as using Model.create()).

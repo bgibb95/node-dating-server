@@ -7,22 +7,16 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
 
   if (!token) {
     return res.status(403).send({
-      message: 'No token provided!',
+      message: 'You be logged in in order to continue. Please log in first.',
     });
   }
 
   jwt.verify(token as string, authConfig.secret || '', (err) => {
     if (err) {
       return res.status(401).send({
-        message: 'Unauthorized!',
+        message: `Sorry, we weren't able to verify you. Please try log in again or try again later`,
       });
     }
     next();
   });
 };
-
-const authJwt = {
-  verifyToken: verifyToken,
-};
-
-export default authJwt;
