@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import db from '../models';
-const User = db.user;
+const UserDb = db.user;
 
 export const checkDuplicateUsernameOrEmail = async (
   req: Request,
@@ -9,18 +9,18 @@ export const checkDuplicateUsernameOrEmail = async (
 ) => {
   if (!req.body.username) {
     return res.status(400).send({
-      message: 'Missing username',
+      message: 'Username is required.',
     });
   }
   if (!req.body.email) {
     return res.status(400).send({
-      message: 'Missing email',
+      message: 'Email address is required.',
     });
   }
 
   try {
     // Find user with same username
-    const user = await User.findOne({ where: { username: req.body.username } });
+    const user = await UserDb.findOne({ where: { username: req.body.username } });
 
     if (user) {
       return res.status(400).send({
@@ -30,7 +30,7 @@ export const checkDuplicateUsernameOrEmail = async (
 
     try {
       // Find user with same email
-      const user = await User.findOne({ where: { email: req.body.email } });
+      const user = await UserDb.findOne({ where: { email: req.body.email } });
 
       if (user) {
         res.status(400).send({

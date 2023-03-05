@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import db from '../models';
-const User = db.user;
+const UserDb = db.user;
 
 export const allUsers = (req: Request, res: Response) => {
-  User.findAll()
+  UserDb.findAll()
     .then((users) => {
       const cleanedUsers = users?.map((user) => {
         const { username, email, firstName, lastName, gender, hobbies, occupation, createdAt } =
@@ -23,7 +23,7 @@ export const allUsers = (req: Request, res: Response) => {
 };
 
 export const userProfile = (req: Request, res: Response) => {
-  User.findOne({
+  UserDb.findOne({
     where: {
       username: req.body.username,
     },

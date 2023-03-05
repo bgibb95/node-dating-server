@@ -1,8 +1,10 @@
 import cors, { CorsOptions } from 'cors';
 import dotenv from 'dotenv';
 import express, { Express, Request, Response } from 'express';
+// Import order is important. Do not adjust
 // prettier-ignore
 dotenv.config();
+// prettier-ignore
 // prettier-ignore
 import { authRoutes } from './routes/auth.routes';
 // prettier-ignore
@@ -14,16 +16,18 @@ const corsConfig: CorsOptions = { origin: process.env.ALLOWED_ORIGIN };
 
 app.use(cors(corsConfig));
 
-// parse requests of content-type - application/json
+// Parse requests of content-type - application/json
 app.use(express.json());
 
-// parse requests of content-type - application/x-www-form-urlencoded
+// Parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-//db.sequelize.sync();
-// force: true will drop the table if it already exists
+// db.sequelize.sync();
+// { force: true } will drop the table if it already exists
+// Uncomment to reset and seed database with dummy data for testing
 // db.sequelize.sync({ force: true }).then(() => {
 //   console.log('Drops and Resync Database with { force: true }');
+//   seedDb(db.user);
 // });
 
 app.get('/', (req: Request, res: Response) => res.send('Express + TypeScript Server'));

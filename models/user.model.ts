@@ -1,16 +1,19 @@
-import {
-  CreationOptional,
-  DataTypes,
-  InferAttributes,
-  InferCreationAttributes,
-  Model,
-  Sequelize,
-} from 'sequelize';
+import { CreationOptional, DataTypes, Model, Sequelize } from 'sequelize';
 
-// Order of InferAttributes & InferCreationAttributes is important.
-class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
-  // 'CreationOptional' is a special type that marks the field as optional
-  // when creating an instance of the model (such as using Model.create()).
+export interface User {
+  id?: number;
+  firstName: string;
+  lastName: string;
+  username: string;
+  email: string;
+  password: string | undefined;
+  gender: string;
+  hobbies: string;
+  occupation: string;
+  createdAt?: string;
+}
+
+export class UserDb extends Model<User> {
   declare id: CreationOptional<number>;
   declare username: string;
   declare email: string;
@@ -24,7 +27,7 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
 }
 
 export const user = (sequelize: Sequelize) => {
-  User.init(
+  UserDb.init(
     {
       id: {
         type: DataTypes.INTEGER.UNSIGNED,
@@ -65,5 +68,5 @@ export const user = (sequelize: Sequelize) => {
     }
   );
 
-  return User;
+  return UserDb;
 };
