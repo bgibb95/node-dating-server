@@ -11,7 +11,16 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
     });
   }
 
-  jwt.verify(token as string, authConfig.secret || '', (err) => {
+  jwt.verify(token as string, authConfig.secret || '', (err, decoded) => {
+    const decodedToken = decoded as
+      | {
+          id: number;
+          iat: number;
+          exp: number;
+        }
+      | undefined;
+    if (decodedToken?.id) res.locals.decodedUserId = decodedToken?.id;
+
     if (err) {
       return res.status(401).send({
         message: `Sorry, we weren't able to verify you. Please try log in again or try again later.`,

@@ -1,14 +1,10 @@
 import cors, { CorsOptions } from 'cors';
 import dotenv from 'dotenv';
 import express, { Express, Request, Response } from 'express';
-// Import order is important. Do not adjust
-// prettier-ignore
-dotenv.config();
-// prettier-ignore
-// prettier-ignore
 import { authRoutes } from './routes/auth.routes';
-// prettier-ignore
 import { userRoutes } from './routes/user.routes';
+
+dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 8080;

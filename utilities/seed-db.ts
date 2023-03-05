@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import { User, UserDb as UserDbClass } from '../models/user.model';
 
 const dummyUser: User = {
-  username: 'JohnTheGreat',
+  username: 'JohnCoolGuy',
   email: 'john@gmail.com',
   password: 'Password1234#',
   firstName: 'John',
@@ -13,7 +13,7 @@ const dummyUser: User = {
 };
 
 export const seedDb = async (UserDb: typeof UserDbClass) => {
-  const dummyUsers: User[] = Array(50).fill(dummyUser);
+  const dummyUsers: User[] = Array(20).fill(dummyUser);
 
   dummyUsers.forEach(async (user, index) => {
     try {

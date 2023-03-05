@@ -5,11 +5,13 @@ const UserDb = db.user;
 export const allUsers = (req: Request, res: Response) => {
   UserDb.findAll()
     .then((users) => {
-      const cleanedUsers = users?.map((user) => {
-        const { username, email, firstName, lastName, gender, hobbies, occupation, createdAt } =
-          user.dataValues;
-        return { username, email, firstName, lastName, gender, hobbies, occupation, createdAt };
-      });
+      const cleanedUsers = users
+        ?.filter((user) => user.dataValues.id !== res.locals.decodedUserId)
+        .map((user) => {
+          const { username, email, firstName, lastName, gender, hobbies, occupation, createdAt } =
+            user.dataValues;
+          return { username, email, firstName, lastName, gender, hobbies, occupation, createdAt };
+        });
 
       res.status(200).send({ users: cleanedUsers });
     })
