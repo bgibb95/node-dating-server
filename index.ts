@@ -22,8 +22,6 @@ app.use(express.json());
 // Parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-// db.sequelize.sync();
-// { force: true } will drop the table if it already exists
 // Uncomment to reset and seed database with dummy data for testing
 // db.sequelize.sync({ force: true }).then(() => {
 //   console.log('Drops and Resync Database with { force: true }');
